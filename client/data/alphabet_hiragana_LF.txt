@@ -1,0 +1,3 @@
+alphabet=abc
+de&hiragana=あいう
+えお

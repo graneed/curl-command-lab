@@ -1,0 +1,90 @@
+version: '3.7'
+
+services:
+  httpd:
+    build: ./http/httpd
+    container_name: cclab_httpd
+    restart: on-failure
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./http/httpd/html/:/var/www/html/
+  nginx:
+    build: ./http/nginx
+    container_name: cclab_nginx
+    restart: on-failure
+    ports:
+      - "10080:10080"
+      - "20080:20080"
+      - "10443:10443"
+      - "20443:20443"
+    volumes:
+      - ./http/nginx/html/:/usr/share/nginx/html/
+  vsftpd:
+    build: ./ftp/vsftpd
+    container_name: cclab_vsftpd
+    restart: on-failure
+    environment:
+      FTP_USER: ftpuser
+      FTP_PASS: ftppass
+      PASV_ADDRESS: 10.0.2.5
+      #PASV_ADDRESS: 127.0.0.1
+      PASV_MIN_PORT: 21100
+      PASV_MAX_PORT: 21110
+    ports:
+      - "20-21:20-21"
+      - "21100-21110:21100-21110"
+    volumes:
+      - ./ftp/file/:/home/vsftpd/ftpuser/
+  tftpd:
+    build: ./ftp/tftpd
+    container_name: cclab_tftpd
+    restart: on-failure
+    ports:
+      - "69:69/udp"
+    volumes:
+      - ./ftp/file/:/var/tftpboot/
+  sftp:
+    build: ./ftp/sftp
+    container_name: cclab_sftp
+    restart: on-failure
+    ports:
+      - "10022:22"
+    volumes:
+      - ./ftp/file/:/home/sftpuser/file/
+  mail:
+    build: ./mail
+    hostname: mail
+    domainname: curl.test
+    container_name: cclab_mail
+    restart: on-failure
+    ports:
+      - "25:25"
+      - "465:465"
+      - "587:587"
+      - "143:143"
+      - "993:993"
+      - "110:110"
+      - "995:995"
+    volumes:
+      - ./mail/mail/:/var/mail/
+      - ./mail/mail-state/:/var/mail-state/
+      - ./mail/config/:/tmp/docker-mailserver/
+    environment:
+      - ENABLE_POP3=1
+    cap_add:
+      - NET_ADMIN
+      - SYS_PTRACE
+  squid:
+    build: ./squid
+    container_name: cclab_squid
+    restart: on-failure
+    ports:
+      - "3128:3128"
+  dante:
+    build: ./dante
+    container_name: cclab_dante
+    restart: on-failure
+    ports:
+      - "1080:1080"

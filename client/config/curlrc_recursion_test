@@ -1,0 +1,2 @@
+-K /root/curl-command-lab/client/config/curlrc_recursion_test
+-d a

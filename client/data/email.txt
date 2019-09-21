@@ -1,0 +1,7 @@
+From: John Smith <sender@curl.test>
+To: Tarou Yamada <receiver@curl.test>
+Subject: Hello Curl 
+Date: Mon, 9 Sep 2019 12:34:56
+
+Dear Tarou,
+Curl is a command-line tool.

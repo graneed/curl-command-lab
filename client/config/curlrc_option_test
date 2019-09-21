@@ -1,0 +1,24 @@
+### single dash
+-d "p1_1=aaa"
+-dp1_2=aaa
+#-d:"p1_3=aaa" #Warning
+#-d="p1_4=aaa" #Warning
+
+### double dashes
+--data "p2_1=aaa"
+#--datap2_2=aaa" #Warning
+#--data : "p2_3=aaa" #Warning
+#--data = "p2_4=aaa" #Warning
+
+### without the initial single dash
+#d "p3_1=aaa" #Warning
+#dp3_2=aaa #Warning
+#d:"p3_3=aaa" #Warning
+#d="p3_4=aaa" #Warning
+
+### without the initial double dashes
+data "p4_1=aaa"
+#datap4_2=aaa #Warning
+data:"p4_3=aaa"
+data="p4_4=aaa"
+
