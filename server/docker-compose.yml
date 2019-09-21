@@ -77,14 +77,22 @@ services:
       - NET_ADMIN
       - SYS_PTRACE
   squid:
-    build: ./squid
+    build: ./proxy/squid
     container_name: cclab_squid
     restart: on-failure
     ports:
       - "3128:3128"
   dante:
-    build: ./dante
+    build: ./proxy/dante
     container_name: cclab_dante
     restart: on-failure
     ports:
       - "1080:1080"
+  mysql:
+    build: ./other/mysql
+    container_name: cclab_mysql
+    restart: on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+    ports:
+      - "3306:3306"
